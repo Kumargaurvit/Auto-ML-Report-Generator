@@ -1,4 +1,5 @@
 import os
+import streamlit as st
 from dotenv import load_dotenv
 from langchain_core.prompts import PromptTemplate
 from langchain_groq import ChatGroq
@@ -24,7 +25,7 @@ def llm_answer(model_metrics,data):
     """
 
     prompt = PromptTemplate(template=system_template,input_variables=["model_metrics","data"])
-    llm = ChatGroq(model="llama-3.1-8b-instant",api_key=api_key)
+    llm = ChatGroq(model="llama-3.1-8b-instant",api_key=st.secrets["GROQ_API_KEY"])
 
 
     retrieval_chain = prompt | llm | StrOutputParser()
