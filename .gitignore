@@ -3,3 +3,4 @@ test_data
 .env
 logs
 test.ipynb
+.streamlit

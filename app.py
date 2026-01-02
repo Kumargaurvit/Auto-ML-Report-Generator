@@ -76,6 +76,12 @@ if uploaded_file:
                 response = llm_answer(model_metrics=classification_metrics,data=data)
                 st.header("Report:")
                 st.markdown(response)
+                if response:
+                    st.download_button(
+                        "Download ML Report",
+                        data = response,
+                        file_name="ML Report.txt"
+                    )
             elif problem_type == None:
                 pass
             else:
@@ -85,13 +91,12 @@ if uploaded_file:
                 response = llm_answer(model_metrics=regression_metrics,data=data)
                 st.header("Report:")
                 st.markdown(response)
-
-            if response:
-                st.download_button(
-                    "Download ML Report",
-                    data = response,
-                    file_name="ML Report.txt"
-                )
+                if response:
+                    st.download_button(
+                        "Download ML Report",
+                        data = response,
+                        file_name="ML Report.txt"
+                    )
         else:
             pass
     except Exception as e:

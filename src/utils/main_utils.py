@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
 from sklearn.metrics import accuracy_score, r2_score
 
@@ -47,10 +48,10 @@ def encode_columns(X_train, X_test, y_train, y_test):
             if len(X_train[column].unique()) <= 2:
                 le = LabelEncoder()
 
-                X_train[column] = le.fit_transform(X_train[[column]])
-                X_test[column] = le.transform(X_test[[column]])
+                X_train[column] = le.fit_transform(X_train[column])
+                X_test[column] = le.transform(X_test[column])
             else:
-                ohe = OneHotEncoder()
+                ohe = OneHotEncoder(handle_unknown='ignore')
 
                 train_column_encoded = ohe.fit_transform(X_train[[column]]).toarray() 
                 test_column_encoded = ohe.fit_transform(X_test[[column]]).toarray()
@@ -68,8 +69,8 @@ def encode_columns(X_train, X_test, y_train, y_test):
     if y_train.dtype == 'O':
         le = LabelEncoder()
 
-        y_train = le.fit_transform(y_train)
-        y_test = le.fit_transform(y_test)
+        y_train = le.fit_transform(y_train.values.ravel())
+        y_test = le.transform(y_test.values.ravel())
 
     return X_train, X_test, y_train, y_test
 
