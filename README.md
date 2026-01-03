@@ -100,5 +100,7 @@ GROQ_API_KEY=your_groq_api_key_here
 ```
 
 ### Step 4: Configure Streamlit Secrets (Required)
+```toml
 Create a .streamlit folder in the root directory and add a secrets.toml file:
 GROQ_API_KEY="your_groq_api_key_here"
+```
