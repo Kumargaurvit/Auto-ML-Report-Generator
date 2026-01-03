@@ -20,12 +20,13 @@ def llm_answer(model_metrics,data):
 
     Give the Output in this format:
     Data Summary (explain each column with normal meaning not with technical words)
-    All Model Explanation (Table and in table one column of meaning)
+    All Model Explanation (Table and in table one column of meaning, the table should have columns - Name, Accuracy
+    with name and accuracy showing from highest to lowest)
     Report why the model is best for this dataset (Do not show model table again)
     """
 
     prompt = PromptTemplate(template=system_template,input_variables=["model_metrics","data"])
-    llm = ChatGroq(model="llama-3.1-8b-instant",api_key=st.secrets["GROQ_API_KEY"])
+    llm = ChatGroq(model="openai/gpt-oss-120b",api_key=st.secrets["GROQ_API_KEY"])
 
 
     retrieval_chain = prompt | llm | StrOutputParser()

@@ -57,6 +57,8 @@ if uploaded_file:
         if remove_duplicates == "Yes":
             logging.info("Removing Duplicate Values")
             clean_data = check_remove_duplicates(clean_data)
+            st.header("Cleaned Data")
+            st.dataframe(clean_data)
         else:
             pass
     except Exception as e:
@@ -70,10 +72,11 @@ if uploaded_file:
             X_train, X_test, y_train, y_test = tp.train_test_split(clean_data,target_column)
             problem_type = st.sidebar.radio("Select Model",options=["Classification","Regression"],index=None)
             if problem_type == "Classification":
-                logging.info("Training Classification Models")
-                best_model_name, best_model_score, classification_metrics = tp.train_models_classification(X_train,X_test,y_train,y_test)
+                with st.spinner("⏳ Training Models and Generating Report..."):
+                    logging.info("Training Classification Models")
+                    best_model_name, best_model_score, classification_metrics = tp.train_models_classification(X_train,X_test,y_train,y_test)
+                    response = llm_answer(model_metrics=classification_metrics,data=data)
                 st.success(f"Best Model Selected {best_model_name} : {best_model_score:.2f}")
-                response = llm_answer(model_metrics=classification_metrics,data=data)
                 st.header("Report:")
                 st.markdown(response)
                 if response:
@@ -85,10 +88,11 @@ if uploaded_file:
             elif problem_type == None:
                 pass
             else:
-                logging.info("Training Regression Models")
-                best_model_name, best_model_score, regression_metrics = tp.train_models_regression(X_train,X_test,y_train,y_test)
+                with st.spinner("⏳ Training Models and Generating Report..."):
+                    logging.info("Training Regression Models")
+                    best_model_name, best_model_score, regression_metrics = tp.train_models_regression(X_train,X_test,y_train,y_test)
+                    response = llm_answer(model_metrics=regression_metrics,data=data)
                 st.success(f"Best Model Selected {best_model_name} : {best_model_score:.2f}")
-                response = llm_answer(model_metrics=regression_metrics,data=data)
                 st.header("Report:")
                 st.markdown(response)
                 if response:
