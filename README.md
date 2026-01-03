@@ -76,7 +76,7 @@ This approach eliminates the need for manually writing ML analysis reports while
 
 ### Prerequisites
 - Python 3.9+
-- pip
+- LangChain API Key
 - Groq API Key
 
 ### Step 1: Clone Repository
