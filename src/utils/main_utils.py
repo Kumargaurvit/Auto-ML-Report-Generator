@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from sklearn.metrics import accuracy_score, r2_score
 
 # Helper Function to Remove Outliers
@@ -45,12 +45,6 @@ def encode_columns(X_train, X_test, y_train, y_test):
     # For independent feature
     for column in X_train.columns:
         if X_train[column].dtype == 'O':
-            if len(X_train[column].unique()) <= 2:
-                le = LabelEncoder()
-
-                X_train[column] = le.fit_transform(X_train[column])
-                X_test[column] = le.transform(X_test[column])
-            else:
                 ohe = OneHotEncoder(handle_unknown='ignore')
 
                 train_column_encoded = ohe.fit_transform(X_train[[column]]).toarray() 
